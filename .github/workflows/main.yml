@@ -5,11 +5,8 @@ workflow_dispatch:
 jobs:
   build:
   runs-on: ubuntu-latest
-    steps:
-    strategy:
-     matrix:
+  steps:
       go: [ '1.14', '1.13' ]
-      name: Go ${{ matrix.go }} sample
       steps:
       - uses: actions/checkout@v3
       - name: Setup go
@@ -44,12 +41,11 @@ jobs:
       - name: Test
         run: npm test
         
-       if: steps.cache.outputs.cache-hit != 'true'
-       run: /install.sh
-     - name: Connect Tailscale
-       uses: tailscale/github-action@v1
-       with:
+      - run: /install.sh
+      - name: Connect Tailscale
+        uses: tailscale/github-action@v1
+          with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-     - name: check for hello.ipn.dev in netmap
-       run:
-         tailscale status | grep -q hello
+             - name: check for hello.ipn.dev in netmap
+               run:
+               tailscale status | grep -q hello
