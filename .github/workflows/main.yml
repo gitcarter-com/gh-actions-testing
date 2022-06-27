@@ -6,8 +6,8 @@ jobs:
   build:
   runs-on: ubuntu-latest
     steps:
-      strategy:
-        matrix:
+    strategy:
+     matrix:
       go: [ '1.14', '1.13' ]
       name: Go ${{ matrix.go }} sample
       steps:
